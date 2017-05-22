@@ -117,7 +117,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		<input type='hidden' name='postID' value='<?php echo $row['postID'];?>'>
 
 		<p><label>Title</label><br />
-		<input type='text' name='postTitle' value='<?php echo $row['postTitle'];?>'></p>
+		<input type='text' name='postTitle' value='<?php echo htmlspecialchars($row['postTitle'], ENT_QUOTES);?>'></p>
 
 		<p><label>Image</label><br />
 		<input type='text' name='postImage' value='<?php echo $row['postImage'];?>'></p>
@@ -126,7 +126,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		<textarea name='postDesc' cols='60' rows='10'><?php echo $row['postDesc'];?></textarea></p>
 
 		<p><label>Content</label><br />
-		<textarea name='postCont' cols='60' rows='10'><?php echo $row['postCont'];?></textarea></p>
+		<textarea name='postCont' cols='60' rows='60'><?php echo $row['postCont'];?></textarea></p>
 
 		<p><input type='submit' name='submit' value='Update'></p>
 

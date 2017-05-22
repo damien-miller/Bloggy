@@ -13,28 +13,54 @@
 
 	<div id="wrapper">
 
-		<h1>myBlog</h1>
+		<h1><a href="/index.php">myBlog</a></h1>
 		<hr />
 
-		<?php
-			try {
+    <div class="navigation">
+    <?php
 
-				$stmt = $db->query('SELECT postID, postTitle, postDesc, postDate FROM blog_posts ORDER BY postID DESC');
-				while($row = $stmt->fetch()){
+      if($result && count($result) > 0)
+      {
+        echo "<h3>Total pages ($pages)</h3>";
 
-					echo '<div>';
-						echo '<h1><a href="viewpost.php?id='.$row['postID'].'">'.$row['postTitle'].'</a></h1>';
-						echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row['postDate'])).'</p>';
-						echo '<p>'.$row['postDesc'].'</p>';
-						echo '<p><a href="viewpost.php?id='.$row['postID'].'">Read More</a></p>';
-					echo '</div>';
+        # first page
+        if($number <= 1)
+          echo "<span>&laquo; prev</span> | <a href=\"?page=$next\">next &raquo;</a>";
 
-				}
+        # last page
+        elseif($number >= $pages)
+          echo "<a href=\"?page=$prev\">&laquo; prev</a> | <span>next &raquo;</span>";
 
-			} catch(PDOException $e) {
-			    echo $e->getMessage();
-			}
-		?>
+        # in range
+        else
+          echo "<a href=\"?page=$prev\">&laquo; prev</a> | <a href=\"?page=$next\">next &raquo;</a>";
+      }
+
+      else
+      {
+        echo "<p>No results found.</p>";
+      }
+
+    ?>
+    </div>
+
+    <?php
+
+      if($result && count($result) > 0)
+      {
+          foreach($result as $key => $row)
+          {
+						echo '<div>';
+							echo '<h1><a href="viewpost.php?id='.$row['postID'].'">'.$row['postTitle'].'</a></h1>';
+							echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row['postDate'])).'</p>';
+							echo '<p>'.$row['postDesc'].'</p>';
+							echo '<p><a href="viewpost.php?id='.$row['postID'].'">Read More</a></p>';
+						echo '</div>';
+          }
+
+      }
+
+    ?>
 
 	</div>
 

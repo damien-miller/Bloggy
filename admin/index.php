@@ -46,6 +46,34 @@ if(isset($_GET['delpost'])){
 	}
 	?>
 
+  <div class="navigation">
+  <?php
+
+    if($result && count($result) > 0)
+    {
+      echo "<h3>Total pages ($pages)</h3>";
+
+      # first page
+      if($number <= 1)
+        echo "<span>&laquo; prev</span> | <a href=\"?page=$next\">next &raquo;</a>";
+
+      # last page
+      elseif($number >= $pages)
+        echo "<a href=\"?page=$prev\">&laquo; prev</a> | <span>next &raquo;</span>";
+
+      # in range
+      else
+        echo "<a href=\"?page=$prev\">&laquo; prev</a> | <a href=\"?page=$next\">next &raquo;</a>";
+    }
+
+    else
+    {
+      echo "<p>No results found.</p>";
+    }
+
+  ?>
+  </div>
+
 	<table>
 	<tr>
 		<th>Title</th>
@@ -55,23 +83,26 @@ if(isset($_GET['delpost'])){
 	<?php
 		try {
 
-			$stmt = $db->query('SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC');
-			while($row = $stmt->fetch()){
+      if($result && count($result) > 0)
+      {
+          foreach($result as $key => $row)
+          {
+						echo '<tr>';
+						echo '<td>'.$row['postTitle'].'</td>';
+						echo '<td>'.date('jS M Y', strtotime($row['postDate'])).'</td>';
+						?>
 
-				echo '<tr>';
-				echo '<td>'.$row['postTitle'].'</td>';
-				echo '<td>'.date('jS M Y', strtotime($row['postDate'])).'</td>';
-				?>
+						<td>
+							<a href="edit-post.php?id=<?php echo $row['postID'];?>">Edit</a> |
+							<a href="javascript:delpost('<?php echo $row['postID'];?>','<?php echo $row['postTitle'];?>')">Delete</a>
+						</td>
 
-				<td>
-					<a href="edit-post.php?id=<?php echo $row['postID'];?>">Edit</a> |
-					<a href="javascript:delpost('<?php echo $row['postID'];?>','<?php echo $row['postTitle'];?>')">Delete</a>
-				</td>
+						<?php
+						echo '</tr>';
+          }
 
-				<?php
-				echo '</tr>';
+      }
 
-			}
 
 		} catch(PDOException $e) {
 		    echo $e->getMessage();

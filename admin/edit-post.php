@@ -69,7 +69,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 			try {
 
 				//insert into database
-				$stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont, postImage = :postImage WHERE postID = :postID') ;
+				$stmt = $db->prepare('UPDATE posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont, postImage = :postImage WHERE postID = :postID') ;
 				$stmt->execute(array(
 					':postTitle' => $postTitle,
 					':postDesc' => $postDesc,
@@ -103,7 +103,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 		try {
 
-			$stmt = $db->prepare('SELECT postID, postTitle, postDesc, postCont, postImage FROM blog_posts WHERE postID = :postID') ;
+			$stmt = $db->prepare('SELECT postID, postTitle, postDesc, postCont, postImage FROM posts WHERE postID = :postID') ;
 			$stmt->execute(array(':postID' => $_GET['id']));
 			$row = $stmt->fetch();
 

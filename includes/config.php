@@ -3,14 +3,14 @@ ob_start();
 session_start();
 
 $servername = "localhost";
-$dbname     = "softgroup";
-$dbusername = "softgroup";
+$dbname     = "blogster";
+$dbusername = "blogster";
 $dbpassword = getenv('SG_DB_PASSWORD');
 
 $db = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$total  = $db->query("SELECT COUNT(postID) as rows FROM blog_posts")
+$total  = $db->query("SELECT COUNT(postID) as rows FROM posts")
       ->fetch(PDO::FETCH_OBJ);
 
 $perpage = 3;
@@ -36,7 +36,7 @@ $range  = $perpage * ($number - 1);
 $prev = $number - 1;
 $next = $number + 1;
 
-$stmt = $db->prepare("SELECT postID, postTitle, postDesc, postDate FROM blog_posts ORDER BY postID DESC LIMIT :limit, :perpage");
+$stmt = $db->prepare("SELECT postID, postTitle, postDesc, postDate FROM posts ORDER BY postID DESC LIMIT :limit, :perpage");
 $stmt->bindParam(':perpage', $perpage, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $range, PDO::PARAM_INT);
 $stmt->execute();

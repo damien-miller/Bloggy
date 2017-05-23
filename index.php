@@ -48,7 +48,7 @@
 
       if($result && count($result) > 0)
       {
-          foreach($result as $key => $row)
+          foreach($result as $row)
           {
 						echo '<div>';
 							echo '<h1><a href="viewpost.php?id='.$row['postID'].'">'.$row['postTitle'].'</a></h1>';

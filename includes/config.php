@@ -13,7 +13,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $total  = $db->query("SELECT COUNT(postID) as rows FROM posts")
       ->fetch(PDO::FETCH_OBJ);
 
-$perpage = 3;
+$perpage = 10;
 $posts  = $total->rows;
 $pages  = ceil($posts / $perpage);
 

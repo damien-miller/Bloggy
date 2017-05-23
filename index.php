@@ -11,17 +11,38 @@
 </head>
 <body>
 
-	<div id="wrapper">
+	<div class="container">
 
-		<h1><a href="/index.php">myBlog</a></h1>
-		<hr />
+    <div class="row">
+  		<h2><a href="/index.php">myBlog</a></h2>
+  		<hr />
+    </div>
 
-    <div class="navigation">
     <?php
 
       if($result && count($result) > 0)
       {
-        echo "<h3>Total pages ($pages)</h3>";
+          foreach($result as $row)
+          {
+						echo '<div class="row">';
+							echo '<h3><a href="viewpost.php?id='.$row['postID'].'">'.$row['postTitle'].'</a></h3>';
+							echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row['postDate'])).'</p>';
+							echo '<p>'.$row['postDesc'].'</p>';
+							echo '<p><a href="viewpost.php?id='.$row['postID'].'">Read More</a></p>';
+						echo '</div>';
+          }
+
+      }
+
+    ?>
+
+		<br>
+    <div class="row">
+    <?php
+
+      if($result && count($result) > 0)
+      {
+        echo "<h5>Total pages ($pages)</h5>";
 
         # first page
         if($number <= 1)
@@ -43,24 +64,6 @@
 
     ?>
     </div>
-
-    <?php
-
-      if($result && count($result) > 0)
-      {
-          foreach($result as $row)
-          {
-						echo '<div>';
-							echo '<h1><a href="viewpost.php?id='.$row['postID'].'">'.$row['postTitle'].'</a></h1>';
-							echo '<p>Posted on '.date('jS M Y H:i:s', strtotime($row['postDate'])).'</p>';
-							echo '<p>'.$row['postDesc'].'</p>';
-							echo '<p><a href="viewpost.php?id='.$row['postID'].'">Read More</a></p>';
-						echo '</div>';
-          }
-
-      }
-
-    ?>
 
 	</div>
 

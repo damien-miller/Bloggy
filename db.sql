@@ -77,11 +77,29 @@ DROP TABLE IF EXISTS `likes`;
 
 CREATE TABLE `likes` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
-  `status_id` int(10) NOT NULL,
-  `like` int(10) NOT NULL,
-  `un-like` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `post_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+LOCK TABLES `likes` WRITE;
+
+INSERT INTO `likes` (`id`, `user_id`, `post_id`)
+VALUES
+  (1,'1','20'),
+  (2,'1','20'),
+  (3,'1','20'),
+  (4,'1','19'),
+  (5,'1','19'),
+  (6,'1','19'),
+  (7,'1','19'),
+  (8,'1','18'),
+  (9,'1','18'),
+  (10,'1','18'),
+  (11,'1','18'),
+  (12,'1','18')
+;
+UNLOCK TABLES;
 
 
 
@@ -99,3 +117,4 @@ CREATE TABLE `comments` (
   `post_id` int(5),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
